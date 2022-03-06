@@ -2,14 +2,15 @@ import React from 'react';
 import { bookShelves } from '../constants';
 
 function BookShelfChanger(props) {
-  const { currentShelf, book, handleReshelf } = props;
+  const { book, handleReshelf } = props;
 
-  const onShelfChange = (event) =>
-    handleReshelf(currentShelf, event.target.value, book);
+  const onShelfChange = (event) => {
+    handleReshelf(book.shelf, event.target.value, book);
+  };
 
   return (
     <div className="book-shelf-changer">
-      <select onChange={onShelfChange}>
+      <select onChange={onShelfChange} value={book.shelf || 'none'}>
         <option value="move" disabled>
           Move to...
         </option>
@@ -17,7 +18,7 @@ function BookShelfChanger(props) {
           <option
             key={shelfName}
             value={shelfName}
-            disabled={currentShelf === shelfName}
+            disabled={book.shelf === shelfName}
           >
             {bookShelves[shelfName].title}
           </option>

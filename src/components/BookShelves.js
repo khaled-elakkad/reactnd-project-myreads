@@ -15,16 +15,14 @@ class BookShelves extends Component {
   }
 
   handleReshelf = (oldShelf, newShelf, book) => {
-    console.log({ oldShelf, newShelf, book });
     BooksAPI.update(book, newShelf).then(() => {
       this.setState((prevState) => {
-        console.log('before', prevState);
         const newState = { ...prevState };
         delete newState.shelves[oldShelf][book.id];
-        console.log('after', newState);
-        // newState.shelves[newShelf][book.id] = book;
-        // console.log('after', newState);
-        return prevState;
+        if (newShelf !== 'none') {
+          newState.shelves[newShelf][book.id] = { ...book, shelf: newShelf };
+        }
+        return newState;
       });
     });
   };

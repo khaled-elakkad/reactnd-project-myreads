@@ -3,7 +3,7 @@ import BookShelfChanger from './BookShelfChanger';
 import { slugify } from '../utils';
 
 function Book(props) {
-  const { title, authors, imageLinks, shelf, id, handleReshelf } = props;
+  const { title, authors, imageLinks, handleReshelf } = props;
   return (
     <div className="book">
       <div className="book-top">
@@ -15,11 +15,7 @@ function Book(props) {
             backgroundImage: `url(${imageLinks.thumbnail})`,
           }}
         />
-        <BookShelfChanger
-          currentShelf={shelf}
-          book={props}
-          handleReshelf={handleReshelf}
-        />
+        <BookShelfChanger book={props} handleReshelf={handleReshelf} />
       </div>
       <div className="book-title">{title}</div>
       {authors.map((author) => (
