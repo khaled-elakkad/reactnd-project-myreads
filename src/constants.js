@@ -4,4 +4,5 @@ export const bookShelves = {
   },
   wantToRead: { title: 'Want To Read' },
   read: { title: 'Read' },
+  none: { title: 'None' },
 };

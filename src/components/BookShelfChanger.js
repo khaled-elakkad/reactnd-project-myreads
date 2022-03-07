@@ -23,7 +23,6 @@ function BookShelfChanger(props) {
             {bookShelves[shelfName].title}
           </option>
         ))}
-        <option value="none">None</option>
       </select>
     </div>
   );
