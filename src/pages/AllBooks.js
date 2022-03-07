@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import qs from 'query-string';
 import PropTypes from 'prop-types';
 import SearchInput from '../components/SearchInput';
 import BooksGrid from '../components/BooksGrid';
@@ -9,22 +11,45 @@ class AllBooks extends Component {
   static propTypes = {
     shelves: PropTypes.object.isRequired,
     handleReshelf: PropTypes.func.isRequired,
+    match: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
   };
 
-  state = { searchTxt: '', books: {} };
+  state = {
+    query:
+      (this.props.location.search &&
+        qs.parse(this.props.location.search).query) ||
+      '',
+    books: {},
+  };
 
-  handleSearchChange = (event) => {
+  componentDidMount() {
+    const { search } = this.props.location;
+    if (search) {
+      this.searchForBooks(qs.parse(search).query);
+    }
+  }
+
+  searchForBooks = (query) => {
     const { shelves } = this.props;
-    const { value } = event.target;
-    this.setState({ searchTxt: value });
-    value &&
-      BooksAPI.search(value).then(
+    this.setState({ query });
+    query &&
+      BooksAPI.search(query).then(
         (resultBooks) =>
           resultBooks.length &&
           this.setState({
             books: replaceWithShelvedBooks(resultBooks, shelves),
           })
       );
+  };
+
+  handleSearchChange = (event) => {
+    const { history } = this.props;
+    const { value } = event.target;
+    history.push({ pathname: `/search`, search: `?query=${value}` });
+
+    this.searchForBooks(value);
   };
 
   handleSearchReshelf = (oldShelf, newShelf, book) => {
@@ -37,11 +62,10 @@ class AllBooks extends Component {
   };
 
   render() {
-    const { searchTxt, books } = this.state;
-
+    const { query, books } = this.state;
     return (
       <div className="search-books">
-        <SearchInput value={searchTxt} onChange={this.handleSearchChange} />
+        <SearchInput value={query} onChange={this.handleSearchChange} />
         <div className="search-books-results">
           <BooksGrid books={books} handleReshelf={this.handleSearchReshelf} />
           <ol className="books-grid" />
@@ -51,4 +75,4 @@ class AllBooks extends Component {
   }
 }
 
-export default AllBooks;
+export default withRouter(AllBooks);
