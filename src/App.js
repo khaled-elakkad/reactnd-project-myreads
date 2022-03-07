@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Route } from 'react-router-dom';
 import MyBooks from './pages/MyBooks';
 import AllBooks from './pages/AllBooks';
@@ -35,19 +35,28 @@ class App extends Component {
     const { shelves } = this.state;
     return (
       <div className="app">
-        <Route
-          exact
-          path="/"
-          render={() => (
-            <MyBooks shelves={shelves} handleReshelf={this.handleReshelf} />
-          )}
-        />
-        <Route
-          path="/search"
-          render={() => (
-            <AllBooks shelves={shelves} handleReshelf={this.handleReshelf} />
-          )}
-        />
+        {Object.entries(shelves).length === 0 ? (
+          <div />
+        ) : (
+          <Fragment>
+            <Route
+              exact
+              path="/"
+              render={() => (
+                <MyBooks shelves={shelves} handleReshelf={this.handleReshelf} />
+              )}
+            />
+            <Route
+              path="/search"
+              render={() => (
+                <AllBooks
+                  shelves={shelves}
+                  handleReshelf={this.handleReshelf}
+                />
+              )}
+            />
+          </Fragment>
+        )}
       </div>
     );
   }

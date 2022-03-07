@@ -17,10 +17,7 @@ class AllBooks extends Component {
   };
 
   state = {
-    query:
-      (this.props.location.search &&
-        qs.parse(this.props.location.search).query) ||
-      '',
+    query: '',
     books: {},
   };
 
@@ -34,14 +31,20 @@ class AllBooks extends Component {
   searchForBooks = (query) => {
     const { shelves } = this.props;
     this.setState({ query });
-    query &&
-      BooksAPI.search(query).then(
-        (resultBooks) =>
-          resultBooks.length &&
-          this.setState({
-            books: replaceWithShelvedBooks(resultBooks, shelves),
-          })
+    if (query) {
+      BooksAPI.search(query).then((resultBooks) =>
+        this.setState(() => {
+          // "3DkX6Uo0gwIC"
+          return {
+            books: resultBooks.length
+              ? replaceWithShelvedBooks(resultBooks, shelves)
+              : {},
+          };
+        })
       );
+    } else {
+      this.setState({ books: {} });
+    }
   };
 
   handleSearchChange = (event) => {
