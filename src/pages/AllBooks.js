@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import serializeForm from 'form-serialize';
 import SearchInput from '../components/SearchInput';
 import BooksGrid from '../components/BooksGrid';
 import * as BooksAPI from '../BooksAPI';
@@ -20,8 +19,6 @@ class AllBooks extends Component {
   handleSearchChange = (event) => {
     const { shelves } = this.props;
     const { value } = event.target;
-    const soso = serializeForm(event.target, { hash: true });
-    console.log('soso', soso);
     this.setState({ searchTxt: value });
     value &&
       BooksAPI.search(value).then(
