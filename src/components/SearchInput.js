@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 function SearchInput(props) {
   const { value, onChange } = props;
@@ -19,5 +20,10 @@ function SearchInput(props) {
     </div>
   );
 }
+
+SearchInput.propTypes = {
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
 
 export default SearchInput;

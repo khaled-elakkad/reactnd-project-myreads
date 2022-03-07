@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import BookShelves from '../components/BookShelves';
 import { Link } from 'react-router-dom';
 
-export default function MyBooks(props) {
+function MyBooks(props) {
   const { shelves, handleReshelf } = props;
   return (
     <div className="list-books">
@@ -16,3 +17,9 @@ export default function MyBooks(props) {
     </div>
   );
 }
+
+MyBooks.propTypes = {
+  shelves: PropTypes.object.isRequired,
+  handleReshelf: PropTypes.func.isRequired,
+};
+export default MyBooks;

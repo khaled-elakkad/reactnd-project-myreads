@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import BookShelfChanger from './BookShelfChanger';
 import ImgNotFound from '../icons/image-not-found.svg';
 import { slugify } from '../utils';
@@ -33,5 +34,32 @@ function Book(props) {
     </div>
   );
 }
+
+Book.propTypes = {
+  handleReshelf: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  shelf: PropTypes.string,
+  authors: PropTypes.array,
+  allowAnonLogging: PropTypes.bool,
+  averageRating: PropTypes.number,
+  canonicalVolumeLink: PropTypes.string,
+  categories: PropTypes.array,
+  contentVersion: PropTypes.string,
+  description: PropTypes.string,
+  imageLinks: PropTypes.object,
+  industryIdentifiers: PropTypes.array,
+  infoLink: PropTypes.string,
+  language: PropTypes.string,
+  maturityRating: PropTypes.string,
+  pageCount: PropTypes.number,
+  panelizationSummary: PropTypes.object,
+  previewLink: PropTypes.string,
+  printType: PropTypes.string,
+  publishedDate: PropTypes.string,
+  publisher: PropTypes.string,
+  ratingsCount: PropTypes.number,
+  readingModes: PropTypes.object,
+};
 
 export default Book;
